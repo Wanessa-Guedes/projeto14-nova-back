@@ -14,5 +14,12 @@
     "projeto14"
   ],
   "author": "Wanessa-Guedes/Geicy-Beatriz",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongodb": "^4.6.0"
+  }
 }
