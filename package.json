@@ -16,10 +16,13 @@
   "author": "Wanessa-Guedes/Geicy-Beatriz",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "chalk": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "mongodb": "^4.6.0"
+    "joi": "^17.6.0",
+    "mongodb": "^4.6.0",
+    "string-strip-html": "^9.1.12"
   }
 }
