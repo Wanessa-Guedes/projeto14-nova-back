@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import Joi from "joi";
 import { stripHtml } from "string-strip-html";
 import chalk from "chalk";
+import { v4 } from 'uuid';
 
 //TODO: Tela cadastro --> Infos: nome, email, endereço, senha
 // endereço: cep, logradouro, complemento, bairro, localidade, UF
@@ -68,6 +69,48 @@ export async function postSignUp(req, res){
 
     } catch (e) {
         res.status(500).send(console.log("Erro ao cadastrar", e));
+    }
+
+}
+
+export async function postSignIn(req, res){
+//TODO: post sign in: recebe e-mail e senha
+// fazer um joi dos dados?
+// confere se o e-mail está cadastrado no banco
+// confere se a senha é a mesma cadastrada
+// se sim, gerar uma sessão com o token e adicionar ao banco de dados
+
+    // Verificação com joi
+    const signInSchema = Joi.object({
+        email: Joi.string().email().required(),
+        password: Joi.string().required()
+    });
+
+    const {error, value} = signInSchema.validate(req.body, {abortEarly: false});
+    if(error){
+        return res.status(422).send(`Dados preenchidos incorretamente. !! Senha tem no min 3 caracteres.`);
+    };
+
+    try {
+        const userCollection = db.collection("users");
+        const logInInfo = {
+            email: value.email,
+            password: value.password
+        };
+        const isUser = await userCollection.findOne({email: logInInfo.email});
+        if(isUser && bcrypt.compareSync(logInInfo.password, isUser.password)){
+            const token = v4();
+            await db.collection("sessions").insertOne({
+                userId: isUser._id,
+                token
+            });
+            return res.status(200).send({name: isUser.name, token});
+        } else {
+            return res.status(401).send("Falha no log-in. Usuário não cadastrado ou senha inválida.");
+        }
+
+    } catch (e) {
+        res.status(500).send("Erro ao logar");
     }
 
 }
