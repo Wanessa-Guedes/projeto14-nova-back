@@ -26,7 +26,7 @@ export async function getAddress(req,res){
                 name: user.name,
                 email: user.email,
                 cep: user.cep,
-                street :user.street,
+                street: user.street,
                 number: user.number,
                 complement: user.complement,
                 district: user.district,
@@ -37,4 +37,8 @@ export async function getAddress(req,res){
     } catch (e) {
         res.status(500).send("Erro na página.");
 }
+}
+
+export async function postOrder(req,res){
+    //TODO: Criar collection de pedido final com as infos da página
 }
