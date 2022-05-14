@@ -10,7 +10,6 @@ import db from "../db.js";
 //     "category":"floral"
 // }
 
-//este endpoint não está presente no front-end.
 export async function registerProducts(req, res){
     const product = req.body;
     try {
@@ -23,7 +22,6 @@ export async function registerProducts(req, res){
     }
 }
 
-//este endpoint busca os produtos cadastrados e os renderiza na tela /home
 export async function getProducts(req, res){
     try {
         const products = await db.collection("products").find({}).toArray();
