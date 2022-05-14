@@ -8,6 +8,9 @@ const mongoClient = new MongoClient(process.env.MONGO_URI);
 
 await mongoClient.connect();
 
-db = mongoClient.db("projeto-nova-db");
+//db = mongoClient.db("projeto-nova-db");
+
+db = mongoClient.db("test");
+//db = mongoClient.db("nova");
 
 export default db;
