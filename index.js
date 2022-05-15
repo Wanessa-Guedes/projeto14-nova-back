@@ -3,8 +3,9 @@ import chalk from "chalk";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import { postSignUp, postSignIn} from "./Controllers/authController.js";
+import {getAddress} from "./Controllers/confirmationPageController.js";
 import {registerProducts, getProducts} from "./Controllers/homeController.js";
-import { postSignUp, postSignIn } from "./Controllers/authController.js";
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ app.use(cors());
 
 app.post("/signup", postSignUp);
 app.post("/signin", postSignIn);
-
+app.get("/confirmationpage", getAddress);
 
 //para a router de produtos
 app.post("/home", registerProducts);

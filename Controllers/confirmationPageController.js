@@ -1,6 +1,6 @@
 import db from "../db.js";
 import bcrypt from "bcrypt";
-import Joi, { func } from "joi";
+import Joi from "joi";
 import { stripHtml } from "string-strip-html";
 import chalk from "chalk";
 
@@ -12,7 +12,7 @@ import chalk from "chalk";
 //TODO: get dos dados do carrinho
 //TODO: post dos dados do pedido finalizado no banco de dados order
 
-export async function getAddress(){
+export async function getAddress(req,res){
     //TODO: get endereço... -> acessar banco de dados users pegar cep, street, number, complement, district, city, state
     
     try {
@@ -23,8 +23,10 @@ export async function getAddress(){
         const user = await db.collection("users").findOne({_id: session.userId});
         if(!user) return res.status(404).send("Usuário não encontrado, favor fazer o login novamente");
         let addressInfo = {
+                name: user.name,
+                email: user.email,
                 cep: user.cep,
-                street :user.street,
+                street: user.street,
                 number: user.number,
                 complement: user.complement,
                 district: user.district,
@@ -35,4 +37,8 @@ export async function getAddress(){
     } catch (e) {
         res.status(500).send("Erro na página.");
 }
+}
+
+export async function postOrder(req,res){
+    //TODO: Criar collection de pedido final com as infos da página
 }
