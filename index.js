@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 
 import {registerProducts, getProducts} from "./Controllers/homeController.js";
 import { postSignUp, postSignIn } from "./Controllers/authController.js";
+import { postItem, getCartItens, deleteItem } from "./Controllers/cartController.js";
 
 dotenv.config();
 
@@ -15,10 +16,13 @@ app.use(cors());
 app.post("/signup", postSignUp);
 app.post("/signin", postSignIn);
 
-
-//para a router de produtos
 app.post("/home", registerProducts);
 app.get("/home", getProducts);
+
+app.post("/cart", postItem);
+app.get("/cart", getCartItens);
+app.delete("/cart", deleteItem)
+
 
 app.listen(process.env.PORT, () => {
     console.log(chalk.bold.green("Back-end on na porta"))
