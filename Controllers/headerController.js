@@ -6,15 +6,16 @@ import { stripHtml } from "string-strip-html";
 import chalk from "chalk";
 import { v4 } from 'uuid';
 
-export async function putLogOut(req, res){
+export async function deleteLogOut(req, res){
 
     const { authorization } = req.headers;
     const token = authorization?.replace('Bearer ', '');
-    if(!token) return res.sendStatus(401);
+    console.log(token)
+    if(!token) return res.status(401).send("Verifique se você estava logado.");
 
     const sessions = await db.collection("sessions").findOne({token});
     const user = await db.collection("users").findOne({_id: sessions.userId});
 
-    await db.collection("sessions").updateOne({_id: new ObjectId(user._id)}, {$set:{token:""}});
+    await db.collection("sessions").deleteOne({token});
     res.status(200).send("Sessão finalizada!");
 }
