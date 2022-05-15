@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { postSignUp, postSignIn} from "./Controllers/authController.js";
 import {getAddress} from "./Controllers/confirmationPageController.js";
 import {registerProducts, getProducts} from "./Controllers/homeController.js";
+import {putLogOut} from "./Controllers/headerController.js";
 
 dotenv.config();
 
@@ -21,6 +22,9 @@ app.get("/confirmationpage", getAddress);
 app.post("/home", registerProducts);
 app.get("/home", getProducts);
 
+//Exit
+app.put("/logout", putLogOut);
+
 app.listen(process.env.PORT, () => {
-    console.log(chalk.bold.green("Back-end on na porta"))
+    console.log(chalk.bold.green(`Back-end on na porta ${process.env.PORT}`))
 });
