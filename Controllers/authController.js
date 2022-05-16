@@ -20,7 +20,7 @@ export async function postSignUp(req, res){
         confirm: req.body.confirm,
     };
 
-    console.log(dataToValidate)
+    //console.log(dataToValidate)
 
     const signUpSchema = Joi.object({
         name: Joi.string().required(),
