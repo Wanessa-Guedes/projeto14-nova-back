@@ -3,9 +3,10 @@ import chalk from "chalk";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import {registerProducts, getProducts} from "./Controllers/homeController.js";
+import homeRouter from "./Routers/homeRouter.js";
+import cartRouter from "./Routers/cartRouter.js";
+
 import { postSignUp, postSignIn } from "./Controllers/authController.js";
-import { postItem, getCartItens, deleteItem } from "./Controllers/cartController.js";
 
 dotenv.config();
 
@@ -16,13 +17,8 @@ app.use(cors());
 app.post("/signup", postSignUp);
 app.post("/signin", postSignIn);
 
-app.post("/home", registerProducts);
-app.get("/home", getProducts);
-
-app.post("/cart", postItem);
-app.get("/cart", getCartItens);
-app.delete("/cart", deleteItem)
-
+app.use(homeRouter);
+app.use(cartRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(chalk.bold.green("Back-end on na porta"))

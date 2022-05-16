@@ -63,6 +63,9 @@ export async function postSignUp(req, res){
             return res.status(409).send(chalk.bold.red("E-mail já cadastrado."));
         }
 
+        //criando uma coleção de carrinho para o usuário.
+        await db.collection("cart").insertOne({email: infosUser.email, cart:[]});
+
         await usersCollection.insertOne(infosUser);
         console.log(infosUser);
         res.status(201).send(console.log(chalk.bold.green("Cadastro realizado com sucesso")));
