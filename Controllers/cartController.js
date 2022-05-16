@@ -6,7 +6,7 @@ export async function postItem(req, res){
     if(product.length === 0) return res.status(422).send("a lista de compras está vazia!")
 
     try {
-        await db.collection("cart").updateOne({user: user.email}, {$set:{cart: product}});
+        await db.collection("cart").updateOne({user: user.email}, {$push:{cart: [product]}});
         res.status(200).send("recebendo lista");
         
     } catch (e) {
