@@ -18,9 +18,9 @@ export async function postSignUp(req, res){
         email: req.body.email,
         password: req.body.password,
         confirm: req.body.confirm,
-    }
+    };
 
-    console.log(dataToValidate)
+    //console.log(dataToValidate)
 
     const signUpSchema = Joi.object({
         name: Joi.string().required(),
@@ -33,7 +33,7 @@ export async function postSignUp(req, res){
     if(error){
        // return res.status(422).send(`Dados preenchidos incorretamente. 
        //                             !! Senha precisa ter no min 3 caracteres.`);
-        return res.status(422).send(error.details.map(detail => console.log(detail.message)));
+        return res.status(422).send(error.details.map(detail => detail.message));
     };
     console.log(value)
     const passowrdHash = bcrypt.hashSync(req.body.password, 10);

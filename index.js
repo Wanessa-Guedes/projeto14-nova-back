@@ -7,6 +7,8 @@ import homeRouter from "./Routers/homeRouter.js";
 import cartRouter from "./Routers/cartRouter.js";
 
 import { postSignUp, postSignIn } from "./Controllers/authController.js";
+import {getAddress, postOrder} from "./Controllers/confirmationPageController.js";
+import {deleteLogOut} from "./Controllers/headerController.js";
 
 dotenv.config();
 
@@ -20,6 +22,12 @@ app.post("/signin", postSignIn);
 app.use(homeRouter);
 app.use(cartRouter);
 
+app.get("/confirmationpage", getAddress);
+app.post("/confirmationpage", postOrder);
+
+//Exit
+app.delete("/logout", deleteLogOut);
+
 app.listen(process.env.PORT, () => {
-    console.log(chalk.bold.green("Back-end on na porta"))
+    console.log(chalk.bold.green(`Back-end on na porta ${process.env.PORT}`))
 });
