@@ -5,10 +5,9 @@ import dotenv from "dotenv";
 
 import homeRouter from "./Routers/homeRouter.js";
 import cartRouter from "./Routers/cartRouter.js";
-
-import { postSignUp, postSignIn } from "./Controllers/authController.js";
-import {getAddress, postOrder} from "./Controllers/confirmationPageController.js";
-import {deleteLogOut} from "./Controllers/headerController.js";
+import authRouter from "./Routers/authRouter.js";
+import confirmartionRouter from "./Routers/confirmationPageRouter.js";
+import headerRouter from "./Routers/headerRouter.js";
 
 dotenv.config();
 
@@ -16,17 +15,16 @@ const app = express();
 app.use(json());
 app.use(cors());
 
-app.post("/signup", postSignUp);
-app.post("/signin", postSignIn);
+app.use(authRouter);
+app.use(authRouter);
 
 app.use(homeRouter);
 app.use(cartRouter);
 
-app.get("/confirmationpage", getAddress);
-app.post("/confirmationpage", postOrder);
+app.use(confirmartionRouter);
+app.use(confirmartionRouter);
 
-//Exit
-app.delete("/logout", deleteLogOut);
+app.use(headerRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(chalk.bold.green(`Back-end on na porta ${process.env.PORT}`))

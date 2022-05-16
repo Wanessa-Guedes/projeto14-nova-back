@@ -1,10 +1,5 @@
 import db from "../db.js";
 import { ObjectId } from "mongodb";
-import bcrypt from "bcrypt";
-import Joi from "joi";
-import { stripHtml } from "string-strip-html";
-import chalk from "chalk";
-import { v4 } from 'uuid';
 
 export async function deleteLogOut(req, res){
 

@@ -5,13 +5,7 @@ import { stripHtml } from "string-strip-html";
 import chalk from "chalk";
 import { v4 } from 'uuid';
 
-//TODO: Tela cadastro --> Infos: nome, email, endereço, senha
-// endereço: cep, logradouro, complemento, bairro, localidade, UF
-// Receber um get do cep viacep no front e colocar num objeto e passar para cá
-
 export async function postSignUp(req, res){
-    // endereço vou receber de outra api
-    // validar o que recebo dessa
 
     const dataToValidate = {
         name: req.body.name,
@@ -19,8 +13,6 @@ export async function postSignUp(req, res){
         password: req.body.password,
         confirm: req.body.confirm,
     };
-
-    //console.log(dataToValidate)
 
     const signUpSchema = Joi.object({
         name: Joi.string().required(),
@@ -31,8 +23,6 @@ export async function postSignUp(req, res){
 
     const {error, value} = signUpSchema.validate(dataToValidate,  {abortEarly: false});
     if(error){
-       // return res.status(422).send(`Dados preenchidos incorretamente. 
-       //                             !! Senha precisa ter no min 3 caracteres.`);
         return res.status(422).send(error.details.map(detail => detail.message));
     };
     console.log(value)
@@ -40,10 +30,6 @@ export async function postSignUp(req, res){
     const sanitizedName = stripHtml(req.body.name).result.trim();
 
     try {
-        //acessar o db de usuários
-        //pegar os novos dados arrumados (senha criptografada e nome sanitizado)
-        // conferir no db se esse email ainda não foi cadastrado
-        // estando tudo certo adicionar na coleção usuários
 
         const usersCollection = db.collection("users");
         const infosUser = {
@@ -77,13 +63,7 @@ export async function postSignUp(req, res){
 }
 
 export async function postSignIn(req, res){
-//TODO: post sign in: recebe e-mail e senha
-// fazer um joi dos dados?
-// confere se o e-mail está cadastrado no banco
-// confere se a senha é a mesma cadastrada
-// se sim, gerar uma sessão com o token e adicionar ao banco de dados
 
-    // Verificação com joi
     const signInSchema = Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().required()
