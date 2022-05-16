@@ -3,9 +3,11 @@ import chalk from "chalk";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import { postSignUp, postSignIn} from "./Controllers/authController.js";
+import homeRouter from "./Routers/homeRouter.js";
+import cartRouter from "./Routers/cartRouter.js";
+
+import { postSignUp, postSignIn } from "./Controllers/authController.js";
 import {getAddress, postOrder} from "./Controllers/confirmationPageController.js";
-import {registerProducts, getProducts} from "./Controllers/homeController.js";
 import {deleteLogOut} from "./Controllers/headerController.js";
 
 dotenv.config();
@@ -16,12 +18,11 @@ app.use(cors());
 
 app.post("/signup", postSignUp);
 app.post("/signin", postSignIn);
+
+app.use(homeRouter);
+app.use(cartRouter);
+
 app.get("/confirmationpage", getAddress);
-
-//para a router de produtos
-app.post("/home", registerProducts);
-app.get("/home", getProducts);
-
 app.post("/confirmationpage", postOrder);
 
 //Exit
