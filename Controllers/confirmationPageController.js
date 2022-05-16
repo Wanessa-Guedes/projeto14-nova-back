@@ -1,21 +1,8 @@
 import db from "../db.js";
-import bcrypt from "bcrypt";
 import Joi from "joi";
-import { stripHtml } from "string-strip-html";
-import chalk from "chalk";
-
-
-//TODO: put atualização de endereço
-//TODO: post dados de compra
-//TODO: get alguns dados do comprador
-//TODO: put dos dados do comprador
-//TODO: get dos dados do carrinho
-//TODO: post dos dados do pedido finalizado no banco de dados order
 
 export async function getAddress(req,res){
-    //TODO: get endereço... -> acessar banco de dados users pegar cep, street, number, complement, district, city, state
 
-    
     try {
         const {authorization} = req.headers;
         const token = authorization?.replace("Bearer","").trim();
@@ -41,7 +28,6 @@ export async function getAddress(req,res){
 }
 
 export async function postOrder(req,res){
-    //TODO: Criar collection de pedido final com as infos da página
 
     const dataToValidate = {
         cep: req.body.cep,
