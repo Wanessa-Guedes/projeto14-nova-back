@@ -14,6 +14,7 @@ import chalk from "chalk";
 
 export async function getAddress(req,res){
     //TODO: get endereço... -> acessar banco de dados users pegar cep, street, number, complement, district, city, state
+
     
     try {
         const {authorization} = req.headers;
@@ -41,4 +42,47 @@ export async function getAddress(req,res){
 
 export async function postOrder(req,res){
     //TODO: Criar collection de pedido final com as infos da página
+
+    const dataToValidate = {
+        cep: req.body.cep,
+        street: req.body.street,
+        number: req.body.number,
+        complement: req.body.complement,
+        district: req.body.district,
+        city: req.body.city,
+        state: req.body.state,
+        creditcard: req.body.creditcard,
+        cvv: req.body.cvv,
+        validate: req.body.validate,
+        cpfTitular: req.body.cpfTitular,
+    }
+
+    const signUpSchema = Joi.object({
+        cep: Joi.string().pattern(new RegExp('^[0-9]{5}\-[0-9]{3}$')).required(),
+        street: Joi.string().required(),
+        number: Joi.number().required(),
+        complement: Joi.string().required(),
+        district: Joi.string().required(),
+        city: Joi.string().required(),
+        state: Joi.string().required(),
+        creditcard: Joi.string().pattern(new RegExp('^[0-9]{16}$')).required(),
+        cvv: Joi.string().pattern(new RegExp('^[0-9]{3}$')).required(),
+        validate: Joi.string().pattern(new RegExp('^[0-9]{1}[1-9]{1}\/[2-9]{2}$')).required(),
+        cpfTitular: Joi.string().pattern(new RegExp('^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$')) 
+    });
+
+    const {error, value} = signUpSchema.validate(dataToValidate,  {abortEarly: false});
+    if(error){
+        return res.status(422).send(error.details.map(detail => console.log(detail.message)));
+    };
+
+    const order = req.body;
+    try {
+        await db.collection("order").insertOne(order);
+        res.sendStatus(201);
+
+    } catch (e) {
+        console.log("Erro ao receber pedido final", e);
+        res.status(500).send(e);
+    }
 }
